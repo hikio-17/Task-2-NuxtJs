@@ -1,5 +1,5 @@
 <template>
-   <div class="w-100">
+   <div class="w-75">
       <Pie :data="chartData" :options="chartOptions" />
    </div>
 </template>
@@ -14,13 +14,15 @@ export default {
    components: {
       Pie
    },
+   props: ['data'],
    data() {
       return {
          chartData: {
             labels: [
-               'Red',
-               'Blue',
-               'Yellow'
+               'Sangat Baik',
+               'Baik',
+               'Cukup',
+               'Kurang',
             ],
             datasets: [
                {
@@ -29,14 +31,20 @@ export default {
                      'rgb(54, 162, 235)',
                      'rgb(255, 205, 86)'
                   ],
-                  data: [40, 20, 12]
+                  data: [40, 20, 12, 13],
                }
-            ]
+            ],
          },
          chartOptions: {
-            responsive: true
+            responsive: true,
+            layout: {
+               padding: 20
+            },
          }
       }
+   },
+   beforeMount() {
+      data.map((siswa) => console.log(siswa.nis));
    }
 }
 </script>
