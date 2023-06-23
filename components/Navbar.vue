@@ -5,10 +5,6 @@
             <img src="../assets/img/student.png" alt="" width="30" height="24" class="d-inline-block align-text-top me-2">
             Bootstrap
          </a>
-         <form class="d-flex">
-            <input class="form-control me-2" type="text" placeholder="Cara siswa ..." aria-label="Search" v-model="searchQuery" @change.prevent="onQuery">
-            <!-- <button class="btn btn-outline-success" type="submit" @click.prevent="onQuery">Search</button> -->
-         </form>
       </div>
    </nav>
 </template>

@@ -20,6 +20,39 @@
         />
       </div>
 
+      <div class="mb-3 d-flex">
+        <label class="form-label">Jenis Kelamin</label>
+        {{ ' : ' }}
+        <div class="d-flex ms-2">
+          <div class="form-check me-2">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="jenisKelamin"
+            id="pria"
+            value="pria"
+            v-model="addData.jenisKelamin"
+          />
+          <label class="form-check-label" for="pria">
+            Pria
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="jenisKelamin"
+            id="wanita"
+            value="wanita"
+            v-model="addData.jenisKelamin"
+          />
+          <label class="form-check-label" for="wanita">
+            Wanita
+          </label>
+        </div>
+        </div>
+      </div>
+
       <div class="row mb-3">
         <label class="form-label">Inputan Nilai Siswa</label>
         <div class="col-sm-3">
@@ -90,6 +123,7 @@ export default {
       addData: {
         nis: null,
         nama: "",
+        jenisKelamin: '',
         arrNilai: [],
       },
     };
@@ -100,7 +134,8 @@ export default {
       this.$emit("onSubmit", this.addData);
       this.addData = {
         nis: null,
-        nama: "",
+        nama: '',
+        jenisKelamin: '',
         nilai: null,
       };
     },

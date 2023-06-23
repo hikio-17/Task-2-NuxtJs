@@ -1,51 +1,93 @@
 <template>
-   <div class="w-75">
-      <Pie :data="chartData" :options="chartOptions" />
-   </div>
+  <div class="w-75">
+    <Pie :data="chartData" :options="chartOptions" />
+  </div>
 </template>
  
-<script lang="ts">
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Pie } from 'vue-chartjs'
+<script>
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "vue-chartjs";
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default {
-   components: {
-      Pie
-   },
-   props: ['data'],
-   data() {
-      return {
-         chartData: {
-            labels: [
-               'Sangat Baik',
-               'Baik',
-               'Cukup',
-               'Kurang',
-            ],
-            datasets: [
-               {
-                  backgroundColor: [
-                     'rgb(255, 99, 132)',
-                     'rgb(54, 162, 235)',
-                     'rgb(255, 205, 86)'
-                  ],
-                  data: [40, 20, 12, 13],
-               }
-            ],
-         },
-         chartOptions: {
-            responsive: true,
-            layout: {
-               padding: 20
-            },
+  components: {
+    Pie,
+  },
+  props: {
+    arrData: {
+      type: Array,
+      default: () => [
+        {
+          nis: null,
+          nama: "",
+          arrNilai: [],
+        },
+      ],
+    },
+  },
+  data() {
+    return {
+      siswaCategorySangatBaik: 0,
+      siswaCategoryBaik: 0,
+      siswaCategoryCukup: 0,
+      siswaCategoryKurang: 0,
+      chartData: {
+        labels: ["Sangat Baik", "Baik", "Cukup", "Kurang"],
+        datasets: [
+          {
+            backgroundColor: ["green", "blue", "orange", "red"],
+            data: [],
+          },
+        ],
+      },
+      chartOptions: {
+        responsive: true,
+        layout: {
+          padding: 20,
+        },
+      },
+    };
+  },
+  methods: {
+    calculateCategoryCounts() {
+      // Menghitung jumlah siswa dalam setiap kategori
+      this.arrData.forEach((siswa) => {
+         let total = siswa.arrNilai.reduce((acc, curr) => acc + curr, 0);
+         const average = total / siswa.arrNilai.length;
+
+         if (average > 90) {
+            ++this.siswaCategorySangatBaik;
+         } else if (average > 80) {
+            ++this.siswaCategoryBaik;
+         } else if (average > 70) {
+            ++this.siswaCategoryCukup;
+         } else {
+            ++this.siswaCategoryKurang;
          }
-      }
-   },
-   beforeMount() {
-      data.map((siswa) => console.log(siswa.nis));
-   }
-}
+      })
+
+      // Memperbarui data pada objek chartData
+      this.chartData.datasets[0].data = [
+        this.siswaCategorySangatBaik,
+        this.siswaCategoryBaik,
+        this.siswaCategoryCukup,
+        this.siswaCategoryKurang,
+      ];
+    },
+  },
+  watch: {
+    arrData: {
+      immediate: true, // Menjalankan watch pada saat komponen dibuat
+      handler() {
+        this.siswaCategorySangatBaik = 0
+        this.siswaCategoryBaik = 0
+        this.siswaCategoryCukup = 0
+        this.siswaCategoryKurang = 0
+        this.calculateCategoryCounts();
+      },
+    },
+  },
+};
 </script>
  
