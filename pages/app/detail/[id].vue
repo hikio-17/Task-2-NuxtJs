@@ -6,11 +6,13 @@
       v-if="siswa.nis == params"
       class="card mb-3 shadow-lg p-3 mb-5 bg-body rounded"
     >
-      <div class="row w-100">
-        <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
           <img
-            src="../../../assets/img/student.png"
-            class="img-fluid rounded-start w-75"
+            :src="[
+              siswa.jenisKelamin == 'pria' ? '../../../assets/img/man.png' :  '../../../assets/img/woman.png'
+            ]"
+            class="img-fluid w-100"
             alt="..."
           />
         </div>
