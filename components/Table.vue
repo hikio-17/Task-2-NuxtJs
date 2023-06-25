@@ -1,7 +1,7 @@
 <template>
   <table class="table table-hover text-center">
     <thead>
-      <tr>
+      <tr class="table-primary">
         <th scope="col">No</th>
         <th scope="col">NIS</th>
         <th scope="col">Nama</th>

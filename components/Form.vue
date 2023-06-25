@@ -8,6 +8,9 @@
           class="form-control"
           placeholder="Masukkan NIS"
           v-model="addData.nis"
+          required
+            oninvalid="this.setCustomValidity('Field NIS tidak boleh kosong!')"
+            oninput="this.setCustomValidity('')"
         />
       </div>
       <div class="mb-3">
@@ -17,6 +20,9 @@
           class="form-control"
           placeholder="Masukkan Nama Siswa"
           v-model="addData.nama"
+          required
+            oninvalid="this.setCustomValidity('Field nama siswa tidak boleh kosong!')"
+            oninput="this.setCustomValidity('')"
         />
       </div>
 
@@ -61,7 +67,7 @@
             type="number"
             class="form-control"
             placeholder="input nilai 1"
-            min="1"
+            min="10"
             max="100"
             required
             oninvalid="this.setCustomValidity('Masukkan nilai dengan range 10 - 100')"
@@ -74,7 +80,7 @@
             type="number"
             class="form-control"
             placeholder="input nilai 2"
-            min="1"
+            min="10"
             max="100"
             required
             oninvalid="this.setCustomValidity('Masukkan nilai dengan range 10 - 100')"
@@ -87,7 +93,7 @@
             type="number"
             class="form-control"
             placeholder="input nilai 3"
-            min="1"
+            min="10"
             max="100"
             required
             oninvalid="this.setCustomValidity('Masukkan nilai dengan range 10 - 100')"
@@ -100,7 +106,7 @@
             type="number"
             class="form-control"
             placeholder="input nilai 4"
-            min="1"
+            min="10"
             max="100"
             required
             oninvalid="this.setCustomValidity('Masukkan nilai dengan range 10 - 100')"

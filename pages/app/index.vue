@@ -6,8 +6,7 @@
   <main>
     <div class="container mt-2">
       <div class="row mt-1 d-flex justify-content-center">
-        <div class="col-md-5">
-          <h4>Grafik Data Siswa</h4>
+        <div class="col-md-5 d-flex justify-content-center align-items-center">
           <Charts :arr-data="data" />
         </div>
         <div class="col-md-7">
@@ -19,6 +18,14 @@
               aria-label="Search"
               v-model="searchQuery"
             />
+
+            <!-- Dropdown -->
+              <select class="custom-select me-2" v-model="sortBy" @click="sorting">
+                <option selected>Sort By</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+      
             <button
               :class="[
                 'btn btn-outline-success btn-sm w-25',
@@ -51,6 +58,7 @@
 </template>
  
  <script>
+// import Charts from "../../components/Chart1.vue";
 import Charts from "../../components/Charts.vue";
 import Navbar from "../../components/Navbar.vue";
 import DaftarSiswa from "../../components/Table.vue";
@@ -69,6 +77,7 @@ export default {
       data: data(),
       searchQuery: "",
       isCreating: false,
+      sortBy: 'Sort By',
     };
   },
   methods: {
@@ -93,6 +102,38 @@ export default {
       this.isCreating = false;
     },
 
+    sorting() {
+      console.log(this.sortBy);
+      if (this.sortBy === 'asc') {
+        this.data = this.data.sort((a, b) => {
+          let namaA = a.nama.toUpperCase();
+          let namaB = b.nama.toUpperCase();
+
+          if (namaA < namaB) {
+            return -1;
+          }
+          if (namaA > namaB) {
+            return 1;
+          }
+          return 0;
+        })
+      }
+      if (this.sortBy === 'desc') {
+        this.data = this.data.sort((a, b) => {
+          let namaA = a.nama.toUpperCase();
+          let namaB = b.nama.toUpperCase();
+
+          if (namaA > namaB) {
+            return -1;
+          }
+          if (namaA < namaB) {
+            return 1;
+          }
+          return 0;
+        })
+      }
+    },
+
     handleRemoveDataSiswa(nis) {
       const confirmDelete = window.confirm(
         `Apakah anda yakin ingin menghapus data siswa dengan nis '${nis}' ? `
@@ -102,6 +143,7 @@ export default {
       }
     },
   },
+
   computed: {
     resultQuery() {
       if (this.searchQuery) {

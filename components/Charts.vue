@@ -5,10 +5,10 @@
 </template>
  
 <script>
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "vue-chartjs";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Title, Legend);
 
 export default {
   components: {
@@ -32,60 +32,75 @@ export default {
       siswaCategoryBaik: 0,
       siswaCategoryCukup: 0,
       siswaCategoryKurang: 0,
-      chartData: {
-        labels: ["Sangat Baik", "Baik", "Cukup", "Kurang"],
-        datasets: [
-          {
-            backgroundColor: ["green", "blue", "orange", "red"],
-            data: [],
-          },
-        ],
-      },
-      chartOptions: {
-        responsive: true,
-        layout: {
-          padding: 20,
-        },
-      },
+      dat: [],
     };
   },
   methods: {
     calculateCategoryCounts() {
       // Menghitung jumlah siswa dalam setiap kategori
       this.arrData.forEach((siswa) => {
-         let total = siswa.arrNilai.reduce((acc, curr) => acc + curr, 0);
-         const average = total / siswa.arrNilai.length;
+        let total = siswa.arrNilai.reduce((acc, curr) => acc + curr, 0);
+        const average = total / siswa.arrNilai.length;
 
-         if (average > 90) {
-            ++this.siswaCategorySangatBaik;
-         } else if (average > 80) {
-            ++this.siswaCategoryBaik;
-         } else if (average > 70) {
-            ++this.siswaCategoryCukup;
-         } else {
-            ++this.siswaCategoryKurang;
-         }
-      })
+        if (average > 90) {
+          ++this.siswaCategorySangatBaik;
+        } else if (average > 80) {
+          ++this.siswaCategoryBaik;
+        } else if (average > 70) {
+          ++this.siswaCategoryCukup;
+        } else {
+          ++this.siswaCategoryKurang;
+        }
+      });
 
       // Memperbarui data pada objek chartData
-      this.chartData.datasets[0].data = [
+      this.data = [
         this.siswaCategorySangatBaik,
         this.siswaCategoryBaik,
         this.siswaCategoryCukup,
         this.siswaCategoryKurang,
       ];
     },
+
+    clearData() {
+      this.data = [];
+      this.siswaCategoryBaik = 0;
+      this.siswaCategorySangatBaik = 0;
+      this.siswaCategoryCukup = 0;
+      this.siswaCategoryKurang = 0;
+    },
   },
-  watch: {
-    arrData: {
-      immediate: true, // Menjalankan watch pada saat komponen dibuat
-      handler() {
-        this.siswaCategorySangatBaik = 0
-        this.siswaCategoryBaik = 0
-        this.siswaCategoryCukup = 0
-        this.siswaCategoryKurang = 0
-        this.calculateCategoryCounts();
-      },
+  computed: {
+    chartData() {
+      this.clearData();
+
+      this.calculateCategoryCounts();
+      return {
+        labels: ["Sangat Baik", "Baik", "Cukup", "Kurang"],
+        datasets: [
+          {
+            backgroundColor: ["green", "blue", "orange", "red"],
+            data: this.data,
+          },
+        ],
+      };
+    },
+
+    chartOptions() {
+      return {
+        layout: {
+          padding: 20,
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Grafik Data Siswa Berdasarkan Nilai",
+            font: {
+              size: 24
+            }
+          },
+        }
+      };
     },
   },
 };

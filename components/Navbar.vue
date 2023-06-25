@@ -1,10 +1,10 @@
 <template>
-   <nav class="navbar navbar-light bg-primary-subtle">
-      <div class="container-fluid">
-         <a class="navbar-brand font-monospace" href="#">
-            <img src="../assets/img/student.png" alt="" width="30" height="24" class="d-inline-block align-text-top me-2">
-            Bootstrap
-         </a>
+   <nav class="navbar navbar-light"  style="background-color: #e3f2fd;">
+      <div class="container-fluid d-flex flex-column justify-content-center">
+         <NuxtLink class="navbar-brand font-monospace" to="/app">
+            <img src="../assets/img/student.png" alt="logo" width="35" height="35" class="d-inline-block align-text-top me-2">
+         </NuxtLink>
+         <h4>Pangkalan Data Siswa</h4>
       </div>
    </nav>
 </template>
