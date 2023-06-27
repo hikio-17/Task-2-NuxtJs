@@ -23,7 +23,7 @@
             <div class="d-flex justify-content-between">
               <div>
                 <div class="d-flex">
-                  <h1 class="card-title">{{ siswa.nama }}</h1>
+                  <h1 class="card-title">{{ siswa.nama }}.</h1>
                   <img
                     :src="[
                       siswa.jenisKelamin == 'pria'
