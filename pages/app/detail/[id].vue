@@ -73,7 +73,7 @@
                 </tr>
                 <tr>
                   <th>Total Nilai</th>
-                  <th>20</th>
+                  <th>{{ siswa.arrNilai.reduce((acc, curr) => acc + curr, 0) }}</th>
                 </tr>
               </tbody>
             </table>
